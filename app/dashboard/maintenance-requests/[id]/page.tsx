@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
-interface MaintenanceRequestsDetailItem
+interface MaintenanceRequestsDetailItem {
   id: string;
   title?: string;
   status?: string;
@@ -10,7 +10,7 @@ interface MaintenanceRequestsDetailItem
   [key: string]: any;
 }
 
-export default function MaintenanceRequestsDetailPage
+export default function MaintenanceRequestsDetailPage() {
   const [items, setItems] = useState<MaintenanceRequestsDetailItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [showCreate, setShowCreate] = useState(false);
