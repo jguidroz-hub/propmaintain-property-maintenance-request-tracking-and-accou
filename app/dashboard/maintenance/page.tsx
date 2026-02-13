@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
-interface PropertiesItem {
+interface MaintenanceItem {
   id: string;
   title?: string;
   status?: string;
@@ -10,14 +10,14 @@ interface PropertiesItem {
   [key: string]: any;
 }
 
-export default function PropertiesPage() {
-  const [items, setItems] = useState<PropertiesItem[]>([]);
+export default function MaintenancePage() {
+  const [items, setItems] = useState<MaintenanceItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [showCreate, setShowCreate] = useState(false);
   const [newTitle, setNewTitle] = useState('');
 
   useEffect(() => {
-    fetch('/api/properties')
+    fetch('/api/maintenance')
       .then(r => r.json())
       .then(data => { setItems(data.items || []); setLoading(false); })
       .catch(() => setLoading(false));
@@ -25,7 +25,7 @@ export default function PropertiesPage() {
 
   const handleCreate = async () => {
     if (!newTitle.trim()) return;
-    const res = await fetch('/api/properties', {
+    const res = await fetch('/api/maintenance', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title: newTitle }),
@@ -39,7 +39,7 @@ export default function PropertiesPage() {
   };
 
   const handleDelete = async (id: string) => {
-    await fetch(`/api/properties/${id}`, { method: 'DELETE' });
+    await fetch(`/api/maintenance/${id}`, { method: 'DELETE' });
     setItems(prev => prev.filter(i => i.id !== id));
   };
 
@@ -52,7 +52,7 @@ export default function PropertiesPage() {
   return (
     <div className="max-w-4xl mx-auto p-6">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">My Properties</h1>
+        <h1 className="text-2xl font-bold">Maintenance Requests</h1>
         <button
           onClick={() => setShowCreate(!showCreate)}
           className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
@@ -61,7 +61,7 @@ export default function PropertiesPage() {
         </button>
       </div>
 
-      <p className="text-gray-600 mb-6">Manage rental property portfolio</p>
+      <p className="text-gray-600 mb-6">Track and resolve maintenance issues</p>
 
       {showCreate && (
         <div className="mb-6 p-4 border rounded-lg bg-gray-50">

@@ -25,30 +25,30 @@ export const auditLog = pgTable('audit_log', {
   createdAt: timestamp('created_at').notNull().default(sql`now()`),
 });
 
-// Track property maintenance requests with status and details
+// Rental properties tracked in the system
+export const properties = pgTable('properties', {
+  id: text('id').primaryKey(),
+  userId: text('user_id').references(() => users.id, { onDelete: 'cascade' }),
+  address: text('address').notNull(),
+  unitNumber: text('unit_number'),
+  totalUnits: integer('total_units').notNull().default(1),
+  type: text('type').notNull(),
+  createdAt: timestamp('created_at').notNull(),
+  updatedAt: timestamp('updated_at').notNull(),
+});
+
+// Tenant maintenance and repair tickets
 export const maintenanceRequests = pgTable('maintenance_requests', {
   id: text('id').primaryKey(),
   userId: text('user_id').references(() => users.id, { onDelete: 'cascade' }),
   propertyId: text('property_id').references(() => properties.id, { onDelete: 'cascade' }),
   title: text('title').notNull(),
   description: text('description').notNull(),
-  status: text('status').notNull().default('pending'),
-  priority: text('priority').notNull().default('standard'),
-  photos: jsonb('photos').default([]),
+  severity: text('severity').notNull().default('low'),
+  status: text('status').notNull().default('open'),
+  images: jsonb('images'),
   estimatedCost: text('estimated_cost'),
-  createdAt: timestamp('created_at').notNull(),
-  updatedAt: timestamp('updated_at').notNull(),
-});
-
-// Manage properties for maintenance tracking
-export const properties = pgTable('properties', {
-  id: text('id').primaryKey(),
-  userId: text('user_id').references(() => users.id, { onDelete: 'cascade' }),
-  address: text('address').notNull(),
-  unitNumber: text('unit_number'),
-  city: text('city').notNull(),
-  state: text('state').notNull(),
-  zipCode: text('zip_code').notNull(),
+  resolutionDate: timestamp('resolution_date'),
   createdAt: timestamp('created_at').notNull(),
   updatedAt: timestamp('updated_at').notNull(),
 });

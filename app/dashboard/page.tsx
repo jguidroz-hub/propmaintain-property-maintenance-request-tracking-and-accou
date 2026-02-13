@@ -28,17 +28,13 @@ export default function DashboardPage() {
 
       <h2 className="text-lg font-semibold mb-4">Quick Access</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
-          <a href="/dashboard/maintenance-requests" className="block p-4 border rounded-lg hover:bg-blue-50 transition">
-            <h3 className="font-medium">Maintenance Requests</h3>
-            <p className="text-sm text-gray-500">Track and manage maintenance requests</p>
-          </a>
-          <a href="/dashboard/maintenance-requests/[id]" className="block p-4 border rounded-lg hover:bg-blue-50 transition">
-            <h3 className="font-medium">Request Details</h3>
-            <p className="text-sm text-gray-500">Detailed view of maintenance request</p>
-          </a>
           <a href="/dashboard/properties" className="block p-4 border rounded-lg hover:bg-blue-50 transition">
             <h3 className="font-medium">My Properties</h3>
-            <p className="text-sm text-gray-500">Manage properties for maintenance tracking</p>
+            <p className="text-sm text-gray-500">Manage rental property portfolio</p>
+          </a>
+          <a href="/dashboard/maintenance" className="block p-4 border rounded-lg hover:bg-blue-50 transition">
+            <h3 className="font-medium">Maintenance Requests</h3>
+            <p className="text-sm text-gray-500">Track and resolve maintenance issues</p>
           </a>
         <a href="/dashboard/settings" className="block p-4 border rounded-lg hover:bg-blue-50 transition">
           <h3 className="font-medium">Settings</h3>

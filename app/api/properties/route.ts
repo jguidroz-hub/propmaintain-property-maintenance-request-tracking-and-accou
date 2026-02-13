@@ -12,7 +12,7 @@ export async function GET(request: Request) {
   if (!session?.user?.id) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const ip = request.headers.get('x-forwarded-for') || 'unknown';
-  // Rate limit: 50 per 15min
+  // Rate limit: 100 per 1min
 
   const items = await db.select().from(properties)
     .where(eq(properties.userId, session.user.id))

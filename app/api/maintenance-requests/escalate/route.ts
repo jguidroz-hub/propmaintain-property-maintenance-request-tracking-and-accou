@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { db } from '@/lib/db';
-import { maintenanceRequests } from '@/lib/domain-schema';
+import { maintenanceRequests/escalate } from '@/lib/domain-schema';
 import { eq, desc } from 'drizzle-orm';
 import { randomUUID } from 'crypto';
 
@@ -12,11 +12,11 @@ export async function GET(request: Request) {
   if (!session?.user?.id) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const ip = request.headers.get('x-forwarded-for') || 'unknown';
-  // Rate limit: 50 per 1min
+  // Rate limit: 20 per 1min
 
-  const items = await db.select().from(maintenanceRequests)
-    .where(eq(maintenanceRequests.userId, session.user.id))
-    .orderBy(desc(maintenanceRequests.createdAt))
+  const items = await db.select().from(maintenanceRequests/escalate)
+    .where(eq(maintenanceRequests/escalate.userId, session.user.id))
+    .orderBy(desc(maintenanceRequests/escalate.createdAt))
     .limit(100);
 
   return NextResponse.json({ items, count: items.length });
@@ -29,7 +29,7 @@ export async function POST(request: Request) {
   const body = await request.json();
   const id = randomUUID();
 
-  const [item] = await db.insert(maintenanceRequests).values({
+  const [item] = await db.insert(maintenanceRequests/escalate).values({
     id,
     userId: session.user.id,
     ...body,
