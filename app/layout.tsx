@@ -1,28 +1,19 @@
 import type { Metadata } from 'next';
+import { Providers } from './providers';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { SessionProvider } from 'next-auth/react';
-
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'PropMaintain - Property maintenance request tracking and accountability platform for tenants',
-  description: 'Value Proposition: Solves tenant frustration with unresponsive landlords by providing transparent tracking, automated escalation, and accountability for maintenance requests including safety hazards.
-
-Target Customer: Property management companies, landlords managing 10+ units, tenant advocacy groups, and individual tenants in multi-unit buildings
-
----
-Category: Micro-SaaS
-Target Market: Property management companies, landlords managing 10+ units, tenant advocacy groups, and individual tenants in multi-unit buildings
-Source Hypothesis ID: a5c4df6d-6a76-48b3-995c-d6a9b02b94d7
-Promotion Type: automatic',
+  description: 'Value Proposition: Solves tenant frustration with unresponsive landlords by providing transparent tracking, automated escalation, and accountability for maintenance requests including safety hazards.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <SessionProvider>
+        <Providers>
           <nav className="border-b">
             <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
               <a href="/" className="font-bold text-lg">PropMaintain - Property maintenance request tracking and accountability platform for tenants</a>
@@ -33,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </nav>
           <main>{children}</main>
-        </SessionProvider>
+        </Providers>
       </body>
     </html>
   );
